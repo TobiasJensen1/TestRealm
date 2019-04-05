@@ -30,10 +30,9 @@ public class PlayerMovement : MonoBehaviour
         movement();
         transform.position = Vector3.MoveTowards(transform.position, moveTo, speed * Time.deltaTime);
         transform.LookAt(moveTo, Vector3.up);
-        
+
         
     }
-
 
     
 
@@ -48,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
             {
+                speed = 5;
                 //changes animaton to run, changes player target position to hit.point, locks y position
                 GetComponent<Animation>().Play("Glory_01_Run_01");
                 moveTo = hit.point;
@@ -62,8 +62,28 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        
 
+        if (!Input.GetMouseButtonDown(0) && collision.transform.tag == "Wall")
+        {
+            
+            speed = 0;
+            GetComponent<Animation>().Play("Glory_01_Idle_01");
+            
+        }
+    }
+
+
+    private void OnCollisionStay(Collision collision)
+    {
+     if(Input.GetMouseButtonUp(0) && collision.transform.tag == "Wall")
+        {
+            speed = 0;
+            GetComponent<Animation>().Play("Glory_01_Idle_01");
+        }   
+    }
 
 
 
