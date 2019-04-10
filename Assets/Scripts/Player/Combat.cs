@@ -9,69 +9,89 @@ public class Combat : MonoBehaviour
     public GameObject player;
     public GameObject enemy;
     float distanceToEnemy;
+    Vector3 moveTo;
 
-    bool att;
+    bool combatCheck;
+    bool idleAttack;
+    bool att1;
+
+    string attackString;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        initiateCombat();
+        //Bool that is set, given players position relative to enemy
+        combatCheck = GameObject.Find("Player").GetComponent<PlayerMovement>().combat;
+
         combat();
     }
 
-    void initiateCombat()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (Input.GetMouseButton(0) && hit.collider.tag == "Enemy")
-            {
-                enemy = hit.collider.gameObject;
-                distanceToEnemy = Vector3.Distance(player.transform.position, enemy.transform.position);
-                if (distanceToEnemy >= 2)
-                {
-                    player.GetComponent<PlayerMovement>().speed = 5;
-                    player.GetComponent<Animation>().Play("Glory_01_Run_01");
-                    player.transform.position = Vector3.MoveTowards(player.transform.position, new Vector3(hit.point.x, 0, hit.point.z), player.GetComponent<PlayerMovement>().speed * Time.deltaTime);
-                }
-            }
-        }
-    }
-
+    
 
     void combat()
     {
-        if(enemy != null)
+
+        //Initiate Combat
+        if (combatCheck && !idleAttack)
         {
-            if (distanceToEnemy <= 2 && !att)
+            idleAttack = true;
+            if (idleAttack)
             {
-                player.GetComponent<PlayerMovement>().speed = 0;
-                StartCoroutine("atk01");
-                att = true;
+                StartCoroutine("IdleAttack");
             }
-            if(Input.GetMouseButtonUp(0))
+        }
+
+        //Stop Combat
+        if (!combatCheck)
+        {
+            StopCoroutine("IdleAttack");
+            idleAttack = false;
+        }
+
+        //Abilities
+
+        //Chose attack to use, idle if none chosen
+        if (combatCheck) { 
+            if(Input.GetKey("space"))
             {
-                enemy = null;
+                attackString = "Attack1";
             }
         }
     }
 
-    IEnumerator atk01()
+
+    
+    IEnumerator IdleAttack()
     {
-        player.GetComponent<Animation>().Play("Glory_01_Atk_01");
-        yield return new WaitForSeconds(.5f);
-        att = false;
-        player.GetComponent<Animation>().Play("Glory_01_Idle_01");
-        StopCoroutine("atk01");
+        while (true) {
+
+            if (idleAttack)
+            {
+                //Plays attack if not null
+                if(attackString != null)
+                {
+                    player.GetComponent<Animator>().Play(attackString);
+                    attackString = null;
+                    yield return new WaitForSeconds(1.6f);
+                }
+                //Plays idleattack if no attack chosen
+                else
+                {
+                    player.GetComponent<Animator>().Play("IdleAttack");
+                    yield return new WaitForSeconds(1.6f);
+                }
+                
+            }
+
+            
+        }
     }
 }
 
