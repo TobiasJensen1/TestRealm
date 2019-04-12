@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     Quaternion targetRotation;
     Rigidbody rb;
 
-    GameObject enemy;
+    public GameObject enemy;
     public bool combat;
 
 

@@ -7,7 +7,6 @@ public class Combat : MonoBehaviour
 {
 
     public GameObject player;
-    public GameObject enemy;
     float distanceToEnemy;
     Vector3 moveTo;
 
@@ -15,18 +14,31 @@ public class Combat : MonoBehaviour
     bool idleAttack;
     bool att1;
 
+    float enemyMaxhealth;
+    float enemyHealth;
+    float currentHealth;
+    float playerDamage;
+    float damageGiven;
+
     string attackString;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        playerDamage =  GameObject.Find("Player").GetComponent<PlayerStats>().damage;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(GameObject.Find("Player").GetComponent<PlayerMovement>().enemy != null) { 
+        enemyHealth = GameObject.Find("Player").GetComponent<PlayerMovement>().enemy.GetComponent<EnemyStats>().health;
+        enemyMaxhealth = GameObject.Find("Player").GetComponent<PlayerMovement>().enemy.GetComponent<EnemyStats>().maxHealth;
+            currentHealth = enemyHealth = GameObject.Find("Player").GetComponent<PlayerMovement>().enemy.GetComponent<EnemyStats>().currentHealth;
+        }
         //Bool that is set, given players position relative to enemy
         combatCheck = GameObject.Find("Player").GetComponent<PlayerMovement>().combat;
 
@@ -85,12 +97,18 @@ public class Combat : MonoBehaviour
                 else
                 {
                     player.GetComponent<Animator>().Play("IdleAttack");
-                    yield return new WaitForSeconds(1.6f);
+                    //Converts damage to % damage
+                   
+
+                    
+                    yield return new WaitForSeconds(1f);
+                    damageGiven = (enemyMaxhealth * playerDamage) / 100;
+                    enemyHealth = GameObject.Find("Player").GetComponent<PlayerMovement>().enemy.GetComponent<EnemyStats>().currentHealth -= playerDamage;
+                    GameObject.Find("Player").GetComponent<PlayerMovement>().enemy.GetComponent<EnemyStats>().health = (100 / enemyMaxhealth) * GameObject.Find("Player").GetComponent<PlayerMovement>().enemy.GetComponent<EnemyStats>().currentHealth;
+                    yield return new WaitForSeconds(.6f);
                 }
                 
             }
-
-            
         }
     }
 }
