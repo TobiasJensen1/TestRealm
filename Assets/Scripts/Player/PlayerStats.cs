@@ -43,9 +43,9 @@ public class PlayerStats : MonoBehaviour
 
     void setPlayerHealthAndFury()
     {
-     
-        healthBar.GetComponent<MonoHealthbar>().Health = (int) health;
-        furyBar.GetComponent<MonoHealthbar>().Health = (int) fury;
+
+        healthBar.GetComponent<MonoHealthbar>().Health = (int)health;
+        furyBar.GetComponent<MonoHealthbar>().Health = (int)fury;
 
     }
 }

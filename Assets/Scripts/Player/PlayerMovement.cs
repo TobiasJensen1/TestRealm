@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         GetComponent<Animator>().Play("Idle");
     }
 
@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         //If player is within attack reach of enemy, stop player and set combat = true (used in combat script)
-        if(enemy != null)
+        if (enemy != null)
         {
             distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
 
@@ -48,9 +48,6 @@ public class PlayerMovement : MonoBehaviour
                 combat = true;
             }
         }
-        
-       
-
     }
 
     void movement()
@@ -83,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
                     GetComponent<Animator>().Play("Run");
                     moveTo = new Vector3(hit.point.x, 0, hit.point.z);
                 }
-                
+
             }
             //if no enemy, no combat (Used to deactivate combat script)
             if (enemy == null)
@@ -91,25 +88,25 @@ public class PlayerMovement : MonoBehaviour
                 combat = false;
             }
         }
-        
+
         //If moveTo has been reached, change attackString to Idle
-        if(Vector3.Distance(transform.position, moveTo) < 0.001f && !combat)
+        if (Vector3.Distance(transform.position, moveTo) < 0.001f && !combat)
         {
             GetComponent<Animator>().Play("Idle");
         }
-        
+
     }
 
     //If player is stuck against wall, stop player
     private void OnCollisionStay(Collision collision)
     {
-     if(Input.GetMouseButtonUp(0) && collision.transform.tag == "Wall")
+        if (Input.GetMouseButtonUp(0) && collision.transform.tag == "Wall")
         {
             speed = 0;
             GetComponent<Animator>().Play("Idle");
-        }   
+        }
     }
 
-    
+
 
 }

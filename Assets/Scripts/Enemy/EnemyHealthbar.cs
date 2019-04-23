@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +16,9 @@ public class EnemyHealthbar : MonoBehaviour
     //Used to update healthbars
     public void setHealth(float health)
     {
-        if(bar != null) { 
-        bar.localScale = new Vector3(1f, health);
+        if (bar != null)
+        {
+            bar.localScale = new Vector3(1f, health);
         }
     }
 }

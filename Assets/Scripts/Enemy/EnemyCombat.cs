@@ -52,19 +52,22 @@ public class EnemyCombat : MonoBehaviour
     }
 
 
+
     //Used to turn enemies healthbar on/off and enable enemy combat based on position relative to player
     void enemiesInCombat()
     {
         //Enables enemy healthbar if within aggroRange and adjusts position and rotation
-        for(int i = 0; i < enemies.Count; i++)
-        {         
-           
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i].gameObject != null)
+            {
                 enemies[i].transform.Find("Healthbar").position = new Vector3(enemies[i].transform.position.x + x, enemies[i].transform.position.y + y, enemies[i].transform.position.z + z);
                 enemies[i].transform.Find("Healthbar").rotation = Quaternion.Euler(Camera.main.transform.position.x - enemies[i].transform.position.x - 20, 90, enemies[i].transform.Find("Healthbar").rotation.z);
                 enemies[i].transform.Find("Healthbar").gameObject.SetActive(true);
+            }
         }
     }
 }
-        
+
 
 
