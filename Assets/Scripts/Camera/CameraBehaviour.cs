@@ -17,7 +17,7 @@ public class CameraBehaviour : MonoBehaviour
 
         transform.position = new Vector3(
    player.transform.position.x + -5,
-   transform.position.y,
+   transform.position.y +4 ,
    player.transform.position.z + 0);
         transform.LookAt(player.transform);
 

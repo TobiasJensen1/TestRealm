@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float speed;
+    public float height;
     float distanceToEnemy;
 
     Vector3 moveTo;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         GetComponent<Animator>().Play("Idle");
+        moveTo = Vector3.MoveTowards(transform.position, new Vector3(-35,height,-25), speed * Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -43,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (distanceToEnemy <= 2)
             {
-                moveTo = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                moveTo = new Vector3(transform.position.x, height, transform.position.z);
                 transform.LookAt(enemy.transform.position, Vector3.up);
                 combat = true;
             }
@@ -63,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
                 //Sets speed to 5, changes animaton to run, changes player target position to hit.point
                 speed = 5;
                 GetComponent<Animator>().Play("Run");
-                moveTo = new Vector3(hit.point.x, 0, hit.point.z);
+                moveTo = new Vector3(hit.point.x, height, hit.point.z);
                 if (enemy != null)
                 {
                     enemy = null;
@@ -78,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
                     //While running to enemy; Sets speed to 5, changes animaton to run, changes player target position to hit.point
                     speed = 5;
                     GetComponent<Animator>().Play("Run");
-                    moveTo = new Vector3(hit.point.x, 0, hit.point.z);
+                    moveTo = new Vector3(hit.point.x, height, hit.point.z);
                 }
 
             }
