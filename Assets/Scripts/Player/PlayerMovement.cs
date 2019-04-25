@@ -22,9 +22,15 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Habour = -35, height, -25
+        //Forest1 = 16, height, 26
+        //Farm = 18, height, 114
+        //Castlegate = 83, height, 231
+
 
         GetComponent<Animator>().Play("Idle");
-        moveTo = Vector3.MoveTowards(transform.position, new Vector3(-35,height,-25), speed * Time.deltaTime);
+        transform.position = new Vector3(-35, height, -25);
+        moveTo = Vector3.MoveTowards(transform.position, new Vector3(-35, height, -25), speed * Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -45,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (distanceToEnemy <= 2)
             {
-                moveTo = new Vector3(transform.position.x, height, transform.position.z);
+                moveTo = new Vector3(transform.position.x, 0, transform.position.z);
                 transform.LookAt(enemy.transform.position, Vector3.up);
                 combat = true;
             }

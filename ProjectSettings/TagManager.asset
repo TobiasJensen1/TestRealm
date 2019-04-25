@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Wall
   - Walkable
+  - TeleportCityFromFarm
   layers:
   - Default
   - TransparentFX
